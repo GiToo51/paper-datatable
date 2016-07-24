@@ -1,4 +1,6 @@
 # paper-datatable
+###***Forked version includes support for Safari and other browsers that did not support arrow functions
+<br>
 
 A [material design implementation of a data table](https://www.google.com/design/spec/components/data-tables.html). Let's call this a pretty solid beta.
 
