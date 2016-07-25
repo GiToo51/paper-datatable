@@ -189,19 +189,38 @@ A [material design implementation of a data table](https://www.google.com/design
 
     _queryAndSetColumns: function(){
       var columns = this.queryAllEffectiveChildren('paper-datatable-column');
-      columns.forEach((column) => {
-        if(!column.beenAttached.state.ready){
-          column.parentNodeRef = this;
-          this.async(function(){
-            column._registerEvilFunctions();
-            column.beenAttached.ready();
+
+     //  columns.forEach((column) => {
+     //    if(!column.beenAttached.state.ready){
+     //      column.parentNodeRef = this;
+     //      this.async(function(){
+     //        column._registerEvilFunctions();
+     //        column.beenAttached.ready();
+     //      });
+     //    }
+     //  });
+     //  this.set('_columns', columns.filter((column) => !column.inactive));
+     //  this.async(function(){
+     //    this._applySortedIndicatorsToDOM();
+     //  });
+
+          columns.forEach(function (column) {
+               if (!column.beenAttached.state.ready) {
+                    column.parentNodeRef = this;
+                    this.async(function () {
+                         column._registerEvilFunctions();
+                         column.beenAttached.ready();
+                    });
+               }
           });
-        }
-      });
-      this.set('_columns', columns.filter((column) => !column.inactive));
-      this.async(function(){
-        this._applySortedIndicatorsToDOM();
-      });
+          this.set('_columns', columns.filter(function (column) {
+               return !column.inactive;
+          }));
+          this.async(function () {
+               this._applySortedIndicatorsToDOM();
+          });
+          //end Babel conversion
+
     },
 
     _setRowKeys: function(){
@@ -243,7 +262,12 @@ A [material design implementation of a data table](https://www.google.com/design
       var cells = Polymer.dom(this.root).querySelectorAll('.bound-cell');
       cells.forEach(this._resetCell.bind(this));
       this.$.rowRepeat.render();
-      Polymer.dom(this.root).querySelectorAll('#cellRepeat').forEach((cr) => cr.render());
+      //Begin Babel conversion
+     //  Polymer.dom(this.root).querySelectorAll('#cellRepeat').forEach((cr) => cr.render());
+      Polymer.dom(this.root).querySelectorAll('#cellRepeat').forEach(function (cr) {
+           return cr.render();
+      });
+      //end babel conversion
     },
 
     _resetCell: function(cell){
@@ -266,7 +290,10 @@ A [material design implementation of a data table](https://www.google.com/design
 
           var cells = Polymer.dom(row).querySelectorAll('.bound-cell');
 
-          cells.forEach((cell) => {
+          //begin babel conversion
+          //cells.forEach((cell) => {
+          cells.forEach(function (cell) {
+          //end babel conversion
 
             if(!cell.dataColumn){
               console.log(cell);
@@ -324,7 +351,14 @@ A [material design implementation of a data table](https://www.google.com/design
         //not too happy about this 'hack', but it will have to do for the moment
         var cells = Polymer.dom(this.root).querySelectorAll('.bound-cell');
         if(cells.length > 0){
-          cells.forEach((cell) => cell.setAttribute('data-row-key', ''));
+
+          //begin babel conversion
+          //cells.forEach((cell) => cell.setAttribute('data-row-key', ''));
+          cells.forEach(function (cell) {
+               return cell.setAttribute('data-row-key', '');
+          });
+          //end babel conversion
+
           this._restructureData();
         }
       }
@@ -764,7 +798,12 @@ A [material design implementation of a data table](https://www.google.com/design
         if(this._columns.length > 0){
 
           var ths = Polymer.dom(this.root).querySelectorAll('th');
-          ths.forEach((th) => {
+
+          //begin babel conversion
+          //ths.forEach((th) => {
+          ths.forEach(function (th) {
+          //end babel conversion
+
             if(th.dataColumn){
               var column = th.dataColumn;
               if(th.scrollWidth > th.offsetWidth){
