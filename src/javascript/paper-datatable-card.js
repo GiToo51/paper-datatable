@@ -248,13 +248,30 @@
             var i = 0;
             var done = function(){
               i++;
-              if(i == 2){
-                var sortedItems = ids.map((id) => items.find((item) => item[this.idProperty] == id));
-                processItems(sortedItems);
-              }
+          //     if(i == 2){
+          //       var sortedItems = ids.map((id) => items.find((item) => item[this.idProperty] == id));
+          //       processItems(sortedItems);
+          //     }
+          //Babel-ed conversion
+               if (i == 2) {
+                 var sortedItems = ids.map(function (id) {
+                   return items.find(function (item) {
+                     return item[this.idProperty] == id;
+                   });
+                 });
+                 processItems(sortedItems);
+               }
+          //end Babel-ed
+
             }.bind(this);
 
-            var idsInCache = ids.filter((id) => this._cache.has(id));
+          //   var idsInCache = ids.filter((id) => this._cache.has(id));
+          // begin babel conversion
+            var idsInCache = ids.filter(function (id) {
+                 return this._cache.has(id);
+           });
+          //  end Babel-ed
+
             if(idsInCache.length){
               var cacheItems = [];
               idsInCache.forEach(function(id){
@@ -266,7 +283,13 @@
               done();
             }
 
-            var idsNotInCache = ids.filter((id) => !this._cache.has(id));
+            //begin Babel conversion
+            //var idsNotInCache = ids.filter((id) => !this._cache.has(id));
+            if (i == 2) var idsNotInCache = ids.filter(function (id) {
+                 return !this._cache.has(id);
+            });
+            //end Babel conversion
+
             if(idsNotInCache.length){
               this.dataSource.getByIds(idsNotInCache).then(function(newItems){
                 items = items.concat(newItems);
